@@ -20,7 +20,7 @@ apply plugin: 'javafx-gradle-plugin'
 
 jfx {
     // minimal requirement for jfxJar-task
-    mainClass = 'src.java.ProductSync'
+    mainClass = 'src.java.ShowProduct'
 
     // minimal requirement for jfxNative-task
     vendor = 'YourName'
@@ -33,6 +33,22 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
     compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
-
-
+    // https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch
+    compile group: 'org.elasticsearch', name: 'elasticsearch', version: '5.2.2'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.5'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.5'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8'
+    // https://mvnrepository.com/artifact/org.elasticsearch.client/sniffer
+    compile group: 'org.elasticsearch.client', name: 'sniffer', version: '5.0.0-alpha4'
+    // https://mvnrepository.com/artifact/org.elasticsearch.client/transport
+    compile group: 'org.elasticsearch.client', name: 'transport', version: '5.2.2'
+    // https://mvnrepository.com/artifact/org.controlsfx/controlsfx
+    compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.12'
+    // https://mvnrepository.com/artifact/org.springframework/spring-core
+    compile group: 'org.springframework', name: 'spring-core', version: '5.0.2.RELEASE'
+    // https://mvnrepository.com/artifact/junit/junit
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
