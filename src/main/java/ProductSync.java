@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import listproduct.*;
 /**
  *
  * @author aniket
@@ -23,14 +22,7 @@ public class ProductSync extends Application {
     public void start(Stage primaryStage) {
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
-                ProductAddView productAddView = new ProductAddView();
-                productAddView.showStage();
-            }
-        });
 
 
         StackPane root = new StackPane();

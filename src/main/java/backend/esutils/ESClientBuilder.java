@@ -22,6 +22,7 @@ public class ESClientBuilder {
     private DefaultTransportClient transportClient;
     private ServerConfig serverConfig;
 
+
     private static final Collection<Class<? extends Plugin>> PRE_INSTALLED_PLUGINS = Collections.unmodifiableList(
                     Arrays.asList(Netty3Plugin.class, Netty4Plugin.class, ReindexPlugin.class, PercolatorPlugin.class, MustachePlugin.class));
 

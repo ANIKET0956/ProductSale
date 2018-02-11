@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.common.collect.Tuple;
 import org.elasticsearch.common.recycler.Recycler;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -17,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HelperUtils {
+public class ModuleUtils {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
 

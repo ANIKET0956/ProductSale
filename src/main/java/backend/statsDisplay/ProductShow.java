@@ -7,7 +7,7 @@ import backend.UIAttributes;
 import backend.enums.OperatorType;
 import backend.esutils.ESClient;
 import backend.esutils.ESClientBuilder;
-import backend.utility.HelperUtils;
+import backend.utility.ModuleUtils;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,7 +15,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,7 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.collect.Tuple;
@@ -37,18 +35,16 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.junit.Test;
 
-import java.lang.reflect.Field;
+
 import java.util.*;
-import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
 public class ProductShow extends Application {
 
-    private static final Double SCREEN_HEIGHT = 1300.0;
-    private static final Double SCREEN_WIDTH = 1800.0;
+    private static  Double SCREEN_HEIGHT = 1300.0;
+    private static  Double SCREEN_WIDTH = 1800.0;
 
     private ESClient esClient;
     private ObservableList<ProductDetails> listProducts = FXCollections.observableArrayList();
@@ -72,6 +68,7 @@ public class ProductShow extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Group root = new Group();
+        stage.setMaximized(true);
 
         // Create table view
         TableView<ProductDetails> table = new TableView<ProductDetails>();
@@ -121,7 +118,6 @@ public class ProductShow extends Application {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println(((ProductDetails)tableView.getItems().get(0)).getSelected());
                 AddProduct addProduct = new AddProduct(esClient);
                 addProduct.start();
             }
@@ -145,12 +141,12 @@ public class ProductShow extends Application {
 
     private <T> void setUpProductTable(TableView<T> table, Class<T> type) {
         table.setEditable(true);
-        List<String> fieldNames = HelperUtils.getFieldNameWithIgnoreCase(type);
+        List<String> fieldNames = ModuleUtils.getFieldNameWithIgnoreCase(type);
         double sizeColumn = SCREEN_WIDTH/(fieldNames.size()+0.7);
         TableColumn<T, Boolean> radioColumn = getRadioButtonCellColumn();
         table.getColumns().add(radioColumn);
         for (String name : fieldNames) {
-            TableColumn<T,String> tableColumn = new TableColumn<>(HelperUtils.beautifyName(name));
+            TableColumn<T,String> tableColumn = new TableColumn<>(ModuleUtils.beautifyName(name));
             tableColumn.setMinWidth(sizeColumn);
             tableColumn.setCellValueFactory(new PropertyValueFactory<T,String>(name));
             table.getColumns().add(tableColumn);
@@ -170,7 +166,7 @@ public class ProductShow extends Application {
             SearchResponse searchResponse = esClient.searchDocument(searchRequest);
             SearchHits hits = searchResponse.getHits();
             for (SearchHit searchHit : hits) {
-                ProductDetails productDetails = HelperUtils.parseFromString(searchHit.getSourceAsString(), ProductDetails.class);
+                ProductDetails productDetails = ModuleUtils.parseFromString(searchHit.getSourceAsString(), ProductDetails.class);
                 listProducts.add(productDetails);
             }
         } catch (Exception ex) {
@@ -207,11 +203,11 @@ public class ProductShow extends Application {
         }
 
         private void fillChoicesForFiltering() {
-            List<Tuple<String, DataType>> fieldName = HelperUtils.getFieldsFromClassWithType(ProductDetails.class);
+            List<Tuple<String, DataType>> fieldName = ModuleUtils.getFieldsFromClassWithType(ProductDetails.class);
             for (Tuple<String,DataType> tuple : fieldName) {
-                choiceAttributes.add(new UIAttributes(tuple.v1(),HelperUtils.beautifyName(tuple.v1()),tuple.v2()));
+                choiceAttributes.add(new UIAttributes(tuple.v1(), ModuleUtils.beautifyName(tuple.v1()),tuple.v2()));
             }
-            choiceBox.getItems().addAll(fieldName.stream().map(t -> HelperUtils.beautifyName(t.v1())).collect(Collectors.toList()));
+            choiceBox.getItems().addAll(fieldName.stream().map(t -> ModuleUtils.beautifyName(t.v1())).collect(Collectors.toList()));
         }
 
         private List<String> fillChoicesForOperator(DataType type) {
@@ -282,7 +278,7 @@ public class ProductShow extends Application {
             System.out.println(searchSourceBuilder.toString());
             SearchResponse searchResponse = esClient.searchDocument(searchRequest);
             for (SearchHit hit : searchResponse.getHits()) {
-                listProducts.add(HelperUtils.parseFromString(hit.getSourceAsString(),ProductDetails.class));
+                listProducts.add(ModuleUtils.parseFromString(hit.getSourceAsString(),ProductDetails.class));
             }
         } catch (Exception ex){
             System.out.println("Error in applying filter on products : " +  ex);
@@ -337,6 +333,18 @@ public class ProductShow extends Application {
                 });
 
                 setGraphic(radioButton);
+            }
+        });
+
+        radioColumn.setCellFactory(new Callback<TableColumn<T, Boolean>, TableCell<T, Boolean>>() {
+            @Override
+            public TableCell<T, Boolean> call(TableColumn<T, Boolean> tBooleanTableColumn) {
+                return new TableCell<T, Boolean>() {
+                    @Override
+                    protected void updateItem(Boolean item, boolean empty) {
+                        super.updateItem(item, empty);
+                    }
+                };
             }
         });
         radioColumn.setCellValueFactory(new PropertyValueFactory<T, Boolean>("Select"));

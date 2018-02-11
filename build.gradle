@@ -20,7 +20,7 @@ apply plugin: 'javafx-gradle-plugin'
 
 jfx {
     // minimal requirement for jfxJar-task
-    mainClass = 'src.java.ShowProduct'
+    mainClass = 'src.java.backend.statsDisplay.ProductShow'
 
     // minimal requirement for jfxNative-task
     vendor = 'YourName'

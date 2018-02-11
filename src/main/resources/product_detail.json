@@ -2,15 +2,15 @@
   "document": {
     "properties": {
       "id" : {
-        "type" : "string" ,
+        "type" : "keyword" ,
         "index" : "not_analyzed"
       },
       "productName"  : {
-        "type" : "string" ,
+        "type" : "keyword" ,
         "index" : "not_analyzed"
       },
       "productType": {
-        "type": "string",
+        "type": "keyword",
         "index": "not_analyzed"
       },
       "purchasedDate" : {
@@ -26,7 +26,7 @@
         "type" : "double"
       },
       "storagePlace" : {
-        "type" : "string" ,
+        "type" : "keyword" ,
         "index" : "not_analyzed"
       }
     }

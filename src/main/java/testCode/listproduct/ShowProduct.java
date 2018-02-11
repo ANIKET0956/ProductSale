@@ -11,6 +11,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -40,6 +42,15 @@ public class ShowProduct extends Application {
         stage.setTitle("Table View Sample");
         stage.setWidth(1000);
         stage.setHeight(1000);
+
+        Button button1 = new Button();
+//A button with the specified text caption.
+        Button button2 = new Button("Accept");
+//A button with the specified text caption and icon.
+        Image imageOk = new Image(getClass().getResourceAsStream("/ok.png"));
+
+        Button button3 = new Button("Accept", new ImageView(imageOk));
+
 
         final Label label = new Label("Address Book");
         label.setFont(new Font("Arial", 20));

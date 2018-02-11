@@ -13,6 +13,8 @@ public class ESClientImpl implements ESClient {
 
     private TransportClient transportClient;
 
+
+
     public ESClientImpl(TransportClient transportClient) {
         this.transportClient = transportClient;
     }

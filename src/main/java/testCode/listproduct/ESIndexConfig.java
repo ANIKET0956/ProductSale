@@ -48,18 +48,11 @@ public class ESIndexConfig {
     public void bulkProcessingTest() throws Exception {
 
         ServerConfig serverConfig = new ServerConfig();
-        ProductDetails productDetails = new ProductDetails();
-        productDetails.setId("SOAP_ITC");
-        productDetails.setMarketCost(15.0);
-        productDetails.setProductName(" Savlon");
-        productDetails.setProductType("SOAP");
-        productDetails.setPurchasedDate(System.currentTimeMillis());
         serverConfig.setHost("127.0.0.1");
         serverConfig.setPort(9300);
         ESClient esClient = new ESClientBuilder().addServerDetails(serverConfig).build();
         String mapping = IOUtils.toString(new ClassPathResource("product_detail.json").getInputStream());
         esClient.prepareIndexWithMapping("product","document",mapping);
-        ObjectMapper mapper = new ObjectMapper();
 
 
 
